@@ -1,32 +1,44 @@
-# Definition for singly-linked list.
-class ListNode:
-     def __init__(self, x):
-         self.val = x
-         self.next = None
+'''
+Merge k sorted linked lists and return it as one sorted list. Analyze and describe its complexity.
 
+Example:
+
+Input:
+[
+  1->4->5,
+  1->3->4,
+  2->6
+]
+Output: 1->1->2->3->4->4->5->6
+
+'''
+
+def print_(x):
+ while x:
+    print(x.val)
+    x = x.next
 
 class Solution:
 
     def merge(self, lista, listb):
-        if not (lista and listb):
-            return lista or listb
-
-        if lista.val < listb.val:
-            head, lista = lista, lista.next
-        else:
-            head, listb = listb, listb.next
-        curr = head
-
-        while lista and listb:
+        if lista and listb:
             if lista.val < listb.val:
-                curr.next, lista = lista, lista.next
+                head, lista = lista, lista.next
             else:
-                curr.next, listb = listb, listb.next
-            curr = curr.next
+                head, listb = listb, listb.next
+            curr = head
 
-        curr.next = lista or listb
-        return head
+            while lista and listb:
+                if lista.val < listb.val:
+                    curr.next, lista = lista, lista.next
+                else:
+                    curr.next, listb = listb, listb.next
+                curr = curr.next
 
+            curr.next = lista or listb
+            print_(head)
+            return head
+        return lista or listb
 
     def mergeKLists(self, lists):
         """
@@ -50,12 +62,3 @@ class Solution:
             lists = temp
 
         return head
-
-l1 = ListNode(2)
-l1.next = ListNode(3)
-
-l2 = ListNode(1)
-l2.next = ListNode(5)
-
-l3 = Solution().mergeKLists([l1, l2])
-print( l3)
